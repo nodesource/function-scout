@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/nodesoure/function-scout.git"
+    "url": "git://github.com/nodesource/function-scout.git"
   },
-  "homepage": "https://github.com/nodesoure/function-scout",
+  "homepage": "https://github.com/nodesource/function-scout",
   "dependencies": {
     "function-origin": "~1.1.1",
     "traverse": "~0.6.6"
@@ -23,12 +23,12 @@
   "keywords": [],
   "author": {
     "name": "Thorsten Lorenz",
-    "email": "nodesoure@gmx.de",
-    "url": "http://nodesoure.com"
+    "email": "nodesource@gmx.de",
+    "url": "http://nodesource.com"
   },
   "license": {
     "type": "MIT",
-    "url": "https://github.com/nodesoure/function-scout/blob/master/LICENSE"
+    "url": "https://github.com/nodesource/function-scout/blob/master/LICENSE"
   },
   "engine": {
     "node": ">=0.10"
