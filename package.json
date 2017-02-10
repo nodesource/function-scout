@@ -1,0 +1,36 @@
+{
+  "name": "function-scout",
+  "version": "0.0.0",
+  "description": "Scouts all functions of a given object and provides data about their origin.",
+  "main": "function-scout.js",
+  "scripts": {
+    "test": "set -e; for t in test/*.js; do node $t; done"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nodesoure/function-scout.git"
+  },
+  "homepage": "https://github.com/nodesoure/function-scout",
+  "dependencies": {
+    "function-origin": "~1.1.1",
+    "traverse": "~0.6.6"
+  },
+  "devDependencies": {
+    "ocat": "~0.1.0",
+    "spok": "~0.5.0",
+    "tape": "~4.6.3"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Thorsten Lorenz",
+    "email": "nodesoure@gmx.de",
+    "url": "http://nodesoure.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/nodesoure/function-scout/blob/master/LICENSE"
+  },
+  "engine": {
+    "node": ">=0.10"
+  }
+}
