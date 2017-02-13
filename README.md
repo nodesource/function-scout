@@ -82,6 +82,9 @@ By default `mutate=false` and thus only `functions` are returned.
     -   `$0.mutate` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if `true` the `object` is cloned and then
         the are functions replaced with the scouted versions on the returned
         `scouted` object. (optional, default `false`)
+    -   `$0.referenceFunction` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if `true` a reference to the function is
+        included with each of the function infos. Make sure to not hold on to it as it would
+        prevent the function and anything it closes over to be garbage collected (optional, default `false`)
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** with properties `scouted` (if `mutate=true`) and
 `functions` explained above
