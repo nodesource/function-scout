@@ -1,10 +1,11 @@
 const traverse = require('traverse')
 const functionOrigin = require('function-origin')
 
-function scoutFunction(fn) {
+function scoutFunction(fn, referenceFunction) {
   const origin = functionOrigin(fn)
   origin.name = fn.name
   origin.line = origin.line + 1
+  if (referenceFunction) origin.function = fn
   return origin
 }
 
@@ -62,9 +63,8 @@ module.exports = function functionScout(object, { mutate = false, referenceFunct
   function processNode(n) {
     const node = this.node
     if (typeof node !== 'function') return
-    const info = scoutFunction(node)
+    const info = scoutFunction(node, referenceFunction)
     functions.push({ path: this.path, key: this.key, level: this.level, info: info })
-    if (referenceFunction) info.function = node
     if (mutate) this.update(info)
   }
 
