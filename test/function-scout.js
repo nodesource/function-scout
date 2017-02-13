@@ -11,8 +11,24 @@ function inspect(obj, depth) {
   console.error(require('util').inspect(obj, false, depth || 5, true))
 }
 
-test('\nscout self', function(t) {
+test('\nscout self, not mutating', function(t) {
   const res = scout(scout)
+
+  t.equal(res.scouted, undefined, 'does not include scouted object')
+  t.equal(res.functions.length, 1, 'scouts the one function')
+  spok(t, res.functions[0], {
+       $topic: 'functions[0]'
+      , path: []
+      , key: spok.notDefined
+      , level: 0
+      , info: spok.defined
+  })
+
+  t.end()
+})
+
+test('\nscout self, mutating', function(t) {
+  const res = scout(scout, { mutate: true })
 
   spok(t, res.scouted, {
       $topic: 'scouted'
@@ -34,8 +50,8 @@ test('\nscout self', function(t) {
   t.end()
 })
 
-test('\nscout self inside an object', function(t) {
-  const res = scout({ functionScout: scout })
+test('\nscout self inside an object, mutating', function(t) {
+  const res = scout({ functionScout: scout }, { mutate: true })
   spok(t, res.scouted.functionScout, {
       $topic: 'scouted.functionScout'
     , file: spok.endsWith('function-scout.js')
@@ -56,8 +72,8 @@ test('\nscout self inside an object', function(t) {
   t.end()
 })
 
-test('\narray of two functions, functionScout and test', function(t) {
-  const res = scout([ scout, test ])
+test('\narray of two functions, functionScout and test, mutating', function(t) {
+  const res = scout([ scout, test ], { mutate: true })
   spok(t, res.scouted[0], {
       $topic: 'scouted[0]'
     , file: spok.endsWith('function-scout.js')
@@ -96,16 +112,16 @@ test('\narray of two functions, functionScout and test', function(t) {
 function ondata() { }
 function onerror() { }
 function onend() { }
-const ondataLine = 96
+const ondataLine = 112
 const onerrorLine = ondataLine + 1
 const onendLine = ondataLine + 2
 
-test('\nreadstream', function(t) {
+test('\nreadstream, mutating', function(t) {
   const stream = fs.createReadStream(__filename)
     .on('data', ondata)
     .on('error', onerror)
     .on('end', onend)
-  const res = scout(stream)
+  const res = scout(stream, { mutate: true })
 
   const events = res.scouted._events
   spok(t, events.end[0], {

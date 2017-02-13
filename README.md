@@ -2,7 +2,7 @@
 
 Scouts all functions of a given object and provides data about their origin.
 
-````js
+```js
     function inspect(obj, depth) {
       console.error(require('util').inspect(obj, false, depth || 5, true))
     }
@@ -10,9 +10,8 @@ Scouts all functions of a given object and provides data about their origin.
     const path = require('path')
     const scout = require('function-scout')
 
-    const res = scout(path.basename)
+    const res = scout(path.basename, { mutate: true })
     inspect(res)
-
 ```
 
 ```js
@@ -72,12 +71,20 @@ function was found.
 
 The `scouted` functions look the same except they don't have any `level, path, key`
 information since they are still attached to the object.
+The `scouted` object only is returned if `mutate=true` and has the resolved functions
+attached to the paths of the object at which they were originally found.
+By default `mutate=false` and thus only `functions` are returned.
 
 **Parameters**
 
 -   `object` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the object which functions to scout
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** configure how functions are scouted
+    -   `$0.mutate` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if `true` the `object` is cloned and then
+        the are functions replaced with the scouted versions on the returned
+        `scouted` object. (optional, default `false`)
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** with properties `scouted` and `functions` explained above
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** with properties `scouted` (if `mutate=true`) and
+`functions` explained above
 
 ## License
 

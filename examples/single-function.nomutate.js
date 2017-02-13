@@ -5,17 +5,10 @@ function inspect(obj, depth) {
 const path = require('path')
 const scout = require('../')
 
-const res = scout(path.basename, { mutate: true })
+const res = scout(path.basename)
 inspect(res)
 
 /*
- { scouted:
-   FunctionOrigin {
-     file: 'path.js',
-     line: 1354,
-     column: 29,
-     inferredName: '',
-     name: 'basename' },
   functions:
    [ { path: [],
        key: undefined,

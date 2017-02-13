@@ -35,13 +35,21 @@ function scoutFunction(fn) {
  *
  * The `scouted` functions look the same except they don't have any `level, path, key`
  * information since they are still attached to the object.
+ * The `scouted` object only is returned if `mutate=true` and has the resolved functions
+ * attached to the paths of the object at which they were originally found.
+ * By default `mutate=false` and thus only `functions` are returned.
  *
  * @name functionScout
  * @function
  * @param {Object} object the object which functions to scout
- * @return {Object} with properties `scouted` and `functions` explained above
+ * @param {Object} $0 configure how functions are scouted
+ * @param {boolean} [$0.mutate=false] if `true` the `object` is cloned and then
+ * the are functions replaced with the scouted versions on the returned
+ * `scouted` object.
+ * @return {Object} with properties `scouted` (if `mutate=true`) and
+ * `functions` explained above
  */
-module.exports = function functionScout(object) {
+module.exports = function functionScout(object, { mutate = false } = {}) {
   const functions = []
 
   function processNode(n) {
@@ -52,6 +60,13 @@ module.exports = function functionScout(object) {
     this.update(info)
   }
 
+  // we don't mutate by default
+  if (!mutate) {
+    traverse(object).forEach(processNode)
+    return { functions }
+  }
+
+  // mutate
   const scouted = traverse(object).map(processNode)
   return { scouted, functions }
 }

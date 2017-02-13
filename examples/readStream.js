@@ -13,7 +13,7 @@ const stream = fs.createReadStream(__filename)
   .on('data', ondata)
   .on('error', onerror)
   .on('end', onend)
-const res = scout(stream)
+const res = scout(stream, { mutate: true })
 inspect(res)
 
 /*
