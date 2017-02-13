@@ -42,14 +42,21 @@ function scoutFunction(fn) {
  * @name functionScout
  * @function
  * @param {Object} object the object which functions to scout
+ *
  * @param {Object} $0 configure how functions are scouted
+ *
  * @param {boolean} [$0.mutate=false] if `true` the `object` is cloned and then
  * the are functions replaced with the scouted versions on the returned
  * `scouted` object.
+ *
+ * @param {boolean} [$0.referenceFunction=false] if `true` a reference to the function is
+ * included with each of the function infos. Make sure to not hold on to it as it would
+ * prevent the function and anything it closes over to be garbage collected
+ *
  * @return {Object} with properties `scouted` (if `mutate=true`) and
  * `functions` explained above
  */
-module.exports = function functionScout(object, { mutate = false } = {}) {
+module.exports = function functionScout(object, { mutate = false, referenceFunction = false } = {}) {
   const functions = []
 
   function processNode(n) {
@@ -57,6 +64,7 @@ module.exports = function functionScout(object, { mutate = false } = {}) {
     if (typeof node !== 'function') return
     const info = scoutFunction(node)
     functions.push({ path: this.path, key: this.key, level: this.level, info: info })
+    if (referenceFunction) info.function = node
     if (mutate) this.update(info)
   }
 

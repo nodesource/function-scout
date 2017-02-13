@@ -11,10 +11,11 @@ function inspect(obj, depth) {
   console.error(require('util').inspect(obj, false, depth || 5, true))
 }
 
-test('\nscout self, not mutating', function(t) {
+test('\nscout self, not mutating, no function', function(t) {
   const res = scout(scout)
 
   t.equal(res.scouted, undefined, 'does not include scouted object')
+
   t.equal(res.functions.length, 1, 'scouts the one function')
   spok(t, res.functions[0], {
        $topic: 'functions[0]'
@@ -23,6 +24,7 @@ test('\nscout self, not mutating', function(t) {
       , level: 0
       , info: spok.defined
   })
+  spok(t, res.functions[0].info, { function: spok.notDefined })
 
   t.end()
 })
@@ -112,7 +114,7 @@ test('\narray of two functions, functionScout and test, mutating', function(t) {
 function ondata() { }
 function onerror() { }
 function onend() { }
-const ondataLine = 112
+const ondataLine = 114
 const onerrorLine = ondataLine + 1
 const onendLine = ondataLine + 2
 
@@ -193,6 +195,23 @@ test('\nreadstream, mutating', function(t) {
     , level: 2
     , info: events.error
   })
+  t.end()
+})
+
+test('\nscout self, not mutating, referencing function', function(t) {
+  const res = scout(scout, { referenceFunction: true })
+
+  t.equal(res.scouted, undefined, 'does not include scouted object')
+  t.equal(res.functions.length, 1, 'scouts the one function')
+  spok(t, res.functions[0], {
+       $topic: 'functions[0]'
+      , path: []
+      , key: spok.notDefined
+      , level: 0
+      , info: spok.defined
+  })
+  spok(t, res.functions[0].info, { function: spok.function })
+
   t.end()
 })
 
