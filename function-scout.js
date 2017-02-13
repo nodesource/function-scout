@@ -57,7 +57,7 @@ module.exports = function functionScout(object, { mutate = false } = {}) {
     if (typeof node !== 'function') return
     const info = scoutFunction(node)
     functions.push({ path: this.path, key: this.key, level: this.level, info: info })
-    this.update(info)
+    if (mutate) this.update(info)
   }
 
   // we don't mutate by default
