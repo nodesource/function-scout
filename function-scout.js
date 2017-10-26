@@ -1,5 +1,5 @@
 const traverse = require('traverse')
-const functionOrigin = require('function-origin')
+const functionOrigin = require('@thlorenz/function-origin')
 
 function scoutFunction(fn, referenceFunction) {
   const origin = functionOrigin(fn)
